@@ -41,14 +41,14 @@ class DCMotorController():
         GPIO.cleanup()
 
 
-if __name__ == '__main__':    
-    controller1 = DCMotorController(21,20,16)
-    controller2 = DCMotorController(7,25,8)
-    try:
-        controller1.forward(5)
-        controller1.stop()
+# if __name__ == '__main__':    
+#     controller1 = DCMotorController(21,20,16)
+#     controller2 = DCMotorController(7,25,8)
+#     try:
+#         controller1.forward(5)
+#         controller1.stop()
 
-    except KeyboardInterrupt:
-        controller1.destroy()
+#     except KeyboardInterrupt:
+#         controller1.destroy()
 
     
