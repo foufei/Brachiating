@@ -2,60 +2,53 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 class DCMotorController():
-
-    def __init__(self):
+    def __init__(self,motor_a,motor_b,motor_e):
         # Pins for Motor Driver Inputs 
-        self.Motor1A = 21
-        self.Motor1B = 20
-        self.Motor1E = 16
-
-        self.Motor2A = 7
-        self.Motor2B = 25
-        self.Motor2E = 8
+        self.motor_a = motor_a
+        self.motor_b = motor_b
+        self.motor_e = motor_e
 
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)              # GPIO Numbering
-        GPIO.setup(self.Motor1A,GPIO.OUT)        # All pins as Outputs
-        GPIO.setup(self.Motor1B,GPIO.OUT)
-        GPIO.setup(self.Motor1E,GPIO.OUT)
-
-        GPIO.setup(self.Motor2A,GPIO.OUT)      
-        GPIO.setup(self.Motor2B,GPIO.OUT)
-        GPIO.setup(self.Motor2E,GPIO.OUT)
-    
+        GPIO.setup(self.motor_a,GPIO.OUT)        # All pins as Outputs
+        GPIO.setup(self.motor_b,GPIO.OUT)
+        GPIO.setup(self.motor_e,GPIO.OUT)
+ 
     def forward(self,sec):
         # Going forwards
-        GPIO.output(self.Motor1A,GPIO.HIGH)
-        GPIO.output(self.Motor1B,GPIO.LOW)
-        GPIO.output(self.Motor1E,GPIO.HIGH)
+        GPIO.output(self.motor_a,GPIO.HIGH)
+        GPIO.output(self.motor_b,GPIO.LOW)
+        GPIO.output(self.motor_e,GPIO.HIGH)
         print("Going forwards")
     
         sleep(sec)
 
     def backward(self,sec):
         # Going backwards
-        GPIO.output(self.Motor1A,GPIO.LOW)
-        GPIO.output(self.Motor1B,GPIO.HIGH)
-        GPIO.output(self.Motor1E,GPIO.HIGH)
+        GPIO.output(self.motor_a,GPIO.LOW)
+        GPIO.output(self.motor_b,GPIO.HIGH)
+        GPIO.output(self.motor_e,GPIO.HIGH)
         print("Going backwards")
     
         sleep(sec)
 
     def stop(self):
-        GPIO.output(self.Motor1E,GPIO.LOW)
-        GPIO.output(self.Motor1B,GPIO.LOW)
+        GPIO.output(self.motor_e,GPIO.LOW)
+        GPIO.output(self.motor_b,GPIO.LOW)
         print("Stop")
 
     def destroy(self):  
         GPIO.cleanup()
 
+
 if __name__ == '__main__':    
-    controller = DCMotorController()
+    controller1 = DCMotorController(21,20,16)
+    controller2 = DCMotorController(7,25,8)
     try:
-        controller.forward(5)
-        controller.stop()
+        controller1.forward(5)
+        controller1.stop()
 
     except KeyboardInterrupt:
-        controller.destroy()
+        controller1.destroy()
 
     
