@@ -5,8 +5,8 @@ Program to simulate brachiation control
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from pynput import keyboard
-import keyboard
+from pynput import Key, Listener
+# import keyboard
 
 from dc_motor_controller import DCMotorController
 from ultrasonic_sensor import *
