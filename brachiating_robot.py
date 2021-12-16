@@ -13,6 +13,7 @@ from ultrasonic_sensor import *
 
 THRESHOLD = 10
 
+
 class BrachiatingRobot():
     def __init__(self):
         # [length, rotation] for each arm
@@ -77,53 +78,61 @@ class BrachiatingRobot():
 
         return self.l1,self.r1,self.l2,self.r2
 
+robot = BrachiatingRobot()
+robot.circulate()
+
+revolute_controller_1 = DCMotorController(21,20,16)
+revolute_controller_2 = DCMotorController(7,25,8)
+
+prismatic_controller_1 = DCMotorController(21,20,16)
+prismatic_controller_2 = DCMotorController(21,20,16)
+
+controller = revolute_controller_1
+
 def on_press(key):
     try:
-        print('Alphanumeric key pressed: {0} '.format(
-            key.char))
+        print('Alphanumeric key pressed: {0} '.format(key.char))
+
+        if key.char == "j":
+            print("You chose the left revolute controller")
+            controller = revolute_controller_1
+            
+        if key.char == "l":
+            print("You chose the right revolute controller")
+            controller = revolute_controller_2
+
+        if key.char == "u":
+            print("You chose the left prismatic controller")
+            controller = prismatic_controller_1
+
+        if key.char == "o":
+            print("You chose the right prismatic controller")
+            controller = prismatic_controller_2
+
+        if key.char == "i":
+            print("Forward")  
+            controller.forward(10)
+
+        if key.char == "k":
+            print("Backward")  
+            controller.backward(10)        
+
     except AttributeError:
-        print('special key pressed: {0}'.format(
-            key))
+        print('special key pressed: {0}'.format(key))
 
 def on_release(key):
-    print('Key released: {0}'.format(
-        key))
+    print('Key released: {0}'.format(key))
+    controller.stop()
     if key == keyboard.Key.esc:
         # Stop listener
         return False
 
+
 # Collect events until released
-with keyboard.Listener(
-        on_press=on_press,
-        on_release=on_release) as listener:
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
-if __name__ == '__main__':    
-    robot = BrachiatingRobot()
-    robot.circulate()
-    revolute_controller_1 = DCMotorController(21,20,16)
-    revolute_controller_2 = DCMotorController(7,25,8)
 
-    prismatic_controller_1 = DCMotorController(21,20,16)
-    prismatic_controller_2 = DCMotorController(21,20,16)
-
-    while True:
-        try:
-            if keyboard.read_key() == "j":
-                print("You chose the left revolute controller")
-            if keyboard.read_key() == "l":
-                print("You chose the right revolute controller")
-            if keyboard.read_key() == "u":
-                print("You chose the left prismatic controller")
-            if keyboard.read_key() == "o":
-                print("You chose the right prismatic controller")
-
-            revolute_controller_1.forward(5)
-            revolute_controller_1.stop()
-
-        except KeyboardInterrupt:
-            revolute_controller_1.destroy()
-            break
 
 
 
