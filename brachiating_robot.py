@@ -111,9 +111,9 @@ def on_press(key):
             controller = prismatic_controller_2
 
         if key.char == "i":
-            controller = revolute_controller_1
+            # controller = revolute_controller_1
             print("Forward")  
-            controller.forward(1)
+            revolute_controller_1.forward(1)
 
         if key.char == "k":
             print("Backward")  
