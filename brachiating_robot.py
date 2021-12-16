@@ -5,7 +5,7 @@ Program to simulate brachiation control
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from pynput import Key, Listener
+from pynput.keyboard import Key, Listener
 # import keyboard
 
 from dc_motor_controller import DCMotorController
@@ -123,13 +123,13 @@ def on_press(key):
 def on_release(key):
     print('Key released: {0}'.format(key))
     controller.stop()
-    if key == keyboard.Key.esc:
+    if key == Key.esc:
         # Stop listener
         return False
 
 
 # Collect events until released
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
 
