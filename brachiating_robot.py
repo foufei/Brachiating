@@ -6,7 +6,6 @@ Program to simulate brachiation control
 import matplotlib.pyplot as plt
 import numpy as np
 from pynput.keyboard import Key, Listener
-# import keyboard
 
 from dc_motor_controller import DCMotorController
 from ultrasonic_sensor import *
@@ -50,8 +49,10 @@ class BrachiatingRobot():
         offset = mid[0]
         while len(self.stack)!=0:
             pt = self.stack.pop()
-            plt.scatter(2*offset-pt[0],pt[1])
+            plt.scatter(2*offset-pt[0],pt[1],cmap='twilight')
         
+
+        plt.yticks(np.arange(-30,0,5))
         plt.show()
 
     def getVerticesOfCircle(self,area,h,r,x=0,y=0,srcAng=0,destAng=2*np.pi):
@@ -110,12 +111,13 @@ def on_press(key):
             controller = prismatic_controller_2
 
         if key.char == "i":
+            controller = revolute_controller_1
             print("Forward")  
-            controller.forward(10)
+            controller.forward(1)
 
         if key.char == "k":
             print("Backward")  
-            controller.backward(10)        
+            controller.backward(10)    
 
     except AttributeError:
         print('special key pressed: {0}'.format(key))
