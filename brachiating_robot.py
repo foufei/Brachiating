@@ -131,6 +131,7 @@ def on_release(key):
 
 
 # Collect events until released
+time.sleep(10)
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
 
